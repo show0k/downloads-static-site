@@ -1,0 +1,44 @@
+{% extends "_base.html" %}
+{% block css %}
+
+<style type="text/css">
+a, a:active {text-decoration: none; color: blue;}
+a:visited {color: #48468F;}
+a:hover, a:focus {text-decoration: underline; color: red;}
+body {background-color: #F5F5F5;}
+h2 {margin-bottom: 12px;}
+th, td {font: 100% monospace; text-align: left;}
+th {font-weight: bold; padding-right: 14px; padding-bottom: 3px;}
+td {padding-right: 20px;}
+td.s, th.s {text-align: right;}
+table {background-color: white; border-top: 1px solid #646464;
+   border-bottom: 1px solid #646464; padding-top: 10px; padding-bottom: 14px;}
+address {color: #787878; padding-top: 10px;}
+</style>
+
+{% endblock %}
+
+{% block body %}
+<h1>{{ robot }} download archive</h1>
+{% if file_list %}
+ <table>
+    <tr>
+    	{% for title in file_list[0] %}
+      <th>{{ title }}</th>
+      	{% endfor %}
+
+    </tr> 
+	{% for file_info in file_list[1] %}
+    {% if not filename_filter or filename_filter in file_info[0] %}
+  	<tr> 
+  		<td><a href="{{ file_info[0] }}">{{ file_info[0] }}</a></td>
+  		<td class="s">{{ file_info[1] }}</td>
+       	<td>{{ file_info[2].strftime('%Y-%m-%d %H:%m') }}</td>
+        	<td>{{ file_info[3]}}</td>
+      </tr>
+      {% endif %}  
+	{% endfor %}
+{% else %}
+<h2> No files detected... </h2>
+{% endif %}
+{% endblock %}
